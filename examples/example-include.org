@@ -1,0 +1,34 @@
+* Retour address                                                       :from:
+Otto Raffzahn \cdot Finsterweg 13 \cdot Tiefeschlucht
+
+* Name details                                                         :name:
+*Otto Raffzahn*
+
+Mietwucherer
+Menschenfreund
+& Gierschlund
+
+* Address                                                           :address:
+Wiesenacker 25a
+99533 Weitewelt
+
+Inselblick 12
+23213 Am Meer
+
+* Bank details                                                         :bank:
+Bankhaus Skrupellos \& Co.
+BLZ: 000.000.00
+Konto: 000.000.000
+
+* Phone                                                               :phone:
+Festnetz: +49 000 0000000
+Freecall: +49 800 0000000
+Mobil: +49 171 00000000
+Fax: +49 0000 000-0000
+
+* Internet                                                         :internet:
+raffzahn@example.com
+info@example.com
+office@example.com
+http:/www.example.com
+http:/www.example.net

@@ -1,0 +1,23 @@
+# -*- org-export-allow-bind-keywords: t -*-
+#+INCLUDE: example-include.org
+
+* Preamble                                                         :noexport:
+#+SUBJECT: Zahlung Ihrer Miete
+#+SIGNATURE: Otto Raffzahn
+#+DATE: 18.01.2016
+#+AUTHOR: Otto Raffzahn
+
+#+OPTIONS: separators:nil name:t
+
+* To-address                                                             :to:
+Frau
+Else Mittellos
+Finsterweg 12
+
+93456 Tiefeschlucht
+
+* Sehr geehrte Frau Mittellos,
+seit der siebten Mieterhöhung im laufenden Jahr konnte ich
+keinen Zahlungseingang von Ihnen mehr verbuchen. Ich bitte Sie
+Ihren Verpflichtungen schnellstens nachzukommen, da ich mich
+sonst gezwungen sehe, Ihre Miete ein weiteres mal anzuheben.
