@@ -1,4 +1,4 @@
-;;; ox-g-brief.el --- KOMA Scrlttr2 Back-End for Org Export Engine
+;;; ox-g-brief.el --- g-brief2 Back-End for Org Export Engine
 
 ;; Copyright (C) 2007-2015  Free Software Foundation, Inc.
 
@@ -6,6 +6,7 @@
 ;;         Alan Schmitt <alan.schmitt AT polytechnique DOT org>
 ;;         Viktor Rosenfeld <listuser36 AT gmail DOT com>
 ;;         Rasmus Pank Roulund <emacs AT pank DOT eu>
+;;         Bernd Wachter <bwachter-org AT aardsoft DOT fi>
 ;; Keywords: org, wp, tex
 
 ;; TODO:
@@ -85,9 +86,10 @@
 ;; `org-g-brief-prefer-special-headings'.
 ;;
 ;; You need an appropriate association in `org-latex-classes' in order
-;; to use the g-brief class.  By default, a sparse scrlttr2
-;; class is provided: "default-koma-letter".  You can also add you own
-;; letter class.  For instance:
+;; to use the g-brief class.  By default, two sparse g-brief classes
+;; are provided: "default-g-brief" and "default-g-brief-de", generating
+;; english or german output. You can also add you own letter class.  For
+;; instance:
 ;;
 ;;   (add-to-list 'org-latex-classes
 ;;                '("my-letter"
@@ -95,9 +97,6 @@
 ;;   DIV=14,
 ;;   fontsize=12pt,
 ;;   parskip=half,
-;;   subject=titled,
-;;   name=false,
-;;   fromalign=left,
 ;;   \[DEFAULT-PACKAGES]
 ;;   \[PACKAGES]
 ;;   \[EXTRA]"))
@@ -165,7 +164,10 @@ when:
   (3) `org-g-brief-headline-is-opening-maybe' is non-nil;
   (4) the letter contains a headline without a special
       tag (e.g. \"to\" or \"ps\");
-then the opening will be implicitly set as the headline title."
+then the opening will be implicitly set as the headline title.
+
+If a headline is selected as opening, and the headline has the tag `empty'
+the opening will be exported as empty string."
   :group 'org-export-g-brief
   :type 'string)
 
@@ -282,8 +284,8 @@ A headline is only used if #+OPENING is not set.  See also
     (:from-address "FROM_ADDRESS" nil org-g-brief-from-address newline)
     (:to-address "TO_ADDRESS" nil nil newline)
     (:subject "SUBJECT" nil nil parse)
-    (:opening "OPENING" nil org-g-brief-opening parse)
-    (:closing "CLOSING" nil org-g-brief-closing parse)
+    (:opening "OPENING" nil org-g-brief-opening space)
+    (:closing "CLOSING" nil org-g-brief-closing space)
     (:signature "SIGNATURE" nil org-g-brief-signature newline)
     (:special-headings nil "special-headings"
 		       org-g-brief-prefer-special-headings)
@@ -517,8 +519,13 @@ holding export options."
                    (when (plist-get info :with-headline-opening)
                      (org-element-map (plist-get info :parse-tree) 'headline
                        (lambda (head)
-                         (unless (org-g-brief--special-tag head info)
-                           (org-element-property :title head)))
+                         (let ((tags (and (plist-get info :with-tags)
+                                          (org-export-get-tags head info))))
+                           (unless (org-g-brief--special-tag head info)
+                             (if (member "empty" tags)
+                                 ""
+                             (org-element-property :title head)))
+                           ))
                        info t))
                    "")
                info))
@@ -540,7 +547,7 @@ holding export options."
 
       ;; Document start.
       "\\begin{document}\n\n"
-))
+      ))
 
    ;; Letter start.
    "\\begin{g-brief}\n\n"
