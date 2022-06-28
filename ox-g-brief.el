@@ -11,7 +11,6 @@
 
 ;; TODO:
 ;; Postvermerk, IhrZeichen, MeinZeichen, IhrSchreiben, Anlagen, Verteiler
-;; kill the old subject formatting code
 ;; kill the encl/ps/... code, replace it with support for anlagen/verteiler
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -286,6 +285,7 @@ A headline is only used if #+OPENING is not set.  See also
     (:subject "SUBJECT" nil nil parse)
     (:opening "OPENING" nil org-g-brief-opening space)
     (:closing "CLOSING" nil org-g-brief-closing space)
+    (:postal-remark "POSTAL_REMARK" nil nil space)
     (:signature "SIGNATURE" nil org-g-brief-signature newline)
     (:special-headings nil "special-headings"
 		       org-g-brief-prefer-special-headings)
@@ -479,8 +479,10 @@ holding export options."
    ;; Time-stamp.
    (and (plist-get info :time-stamp-file)
         (format-time-string "%% Created %Y-%m-%d %a %H:%M\n"))
+   ;; LaTeX compiler
+   (org-latex--insert-compiler info)
    ;; Document class and packages.
-   (org-latex--make-header info)
+   (org-latex-make-preamble info)
    ;; Settings.  They can come from two locations, in increasing
    ;; order of precedence: global variables  and in-buffer
    ;; settings.  Thus, we first insert settings coming from global
